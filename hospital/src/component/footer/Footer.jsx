@@ -94,30 +94,30 @@ function Footer() {
                 About
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#">
                 <span className="icon-long-arrow-right mr-2" />
                 Departments
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="#">
                 <span className="icon-long-arrow-right mr-2" />
                 Doctors
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="#">
                 <span className="icon-long-arrow-right mr-2" />
                 Blog
               </a>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <a href="#">
                 <span className="icon-long-arrow-right mr-2" />
                 Pricing
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="#">
                 <span className="icon-long-arrow-right mr-2" />

@@ -1,10 +1,9 @@
 import React from 'react'
 
-
-export default function Mainhome_bg() {
+function Registration() {
   return (
-   <>
-  <section
+    <>
+       <section
   className="hero-wrap js-fullheight"
   style={{ backgroundImage: 'url("images/bg_3.jpg")' }}
   data-section="home"
@@ -20,8 +19,8 @@ export default function Mainhome_bg() {
         <div className="mt-5">
           <span className="subheading">Welcome to Mediplus</span>
           <h1 className="mb-4">
-            <span className=''>We</span> are here <br />
-            for your Care
+            <span className=''>MM</span>  Hospital <br />
+           
           </h1>
           <p className="mb-4">
             Far far away, behind the word mountains, far from the countries
@@ -30,7 +29,7 @@ export default function Mainhome_bg() {
           </p>
           <p>
             <a href="/appointment" className="btn btn-primary py-3 px-4">
-              Make an appointment
+             Login Now
             </a>
           </p>
         </div>
@@ -38,8 +37,8 @@ export default function Mainhome_bg() {
     </div>
   </div>
 </section>
-
-
-   </>
+    </>
   )
 }
+
+export default Registration

@@ -25,7 +25,7 @@ export default function Navbar() {
     <div className="collapse navbar-collapse" id="ftco-nav">
       <ul className="navbar-nav nav ml-auto">
         <li className="nav-item">
-          <a href="/" className="nav-link">
+          <a href="/userhome" className="nav-link">
             <span>Home</span>
           </a>
         </li>
@@ -55,7 +55,7 @@ export default function Navbar() {
           </a>
         </li>
         <li className="nav-item cta mr-md-2">
-          <a href="appointment.html" className="nav-link">
+          <a href="/appointment" className="nav-link">
             Appointment
           </a>
         </li>

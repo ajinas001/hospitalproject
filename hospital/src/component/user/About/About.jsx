@@ -30,10 +30,10 @@ function About() {
                 into your mouth.
               </p>
               <p>
-                <a href="#" className="btn btn-primary py-3 px-4">
+                <a href="/appointment" className="btn btn-primary py-3 px-4">
                   Make an appointment
                 </a>{" "}
-                <a href="#" className="btn btn-secondary py-3 px-4">
+                <a href="/contactdetails" className="btn btn-secondary py-3 px-4">
                   Contact us
                 </a>
               </p>
