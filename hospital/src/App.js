@@ -7,6 +7,7 @@ import Aboutdetailspage from './pages/Aboutdetails/Aboutdetailspage';
 import Contactpage from './pages/Contactpage/Contactpage';
 import Appointmentpage from './pages/appointmentpage/Appointmentpage';
 import Registrationpage from './pages/Registrationpage/Registrationpage';
+import Loginpage from './pages/Loginpage/Loginpage';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
    
    <BrowserRouter>
    <Routes>
-   <Route path='/' element= {<Registrationpage/>}></Route>
+   <Route path='/' element= {<Loginpage/>}></Route>
+   <Route path='/Register' element= {<Registrationpage/>}></Route>
    <Route path='/userhome' element= {<Home/>}></Route>
    <Route path='/doctordetails' element= {<Doctordetailspage/>}></Route>
    <Route path='/aboutdetails' element= {<Aboutdetailspage/>}></Route>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Logincomponent from '../logincomponent/Logincomponent'
 
 function Registration() {
   return (
@@ -28,9 +29,11 @@ function Registration() {
             live in Bookmarksgrove.
           </p>
           <p>
-            <a href="/appointment" className="btn btn-primary py-3 px-4">
+            {/* <a href="/appointment" className="btn btn-primary py-3 px-4">
              Login Now
-            </a>
+            </a> */}
+            <Logincomponent/>
+            
           </p>
         </div>
       </div>

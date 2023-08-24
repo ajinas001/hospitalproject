@@ -16,7 +16,7 @@ export default function TopBar() {
 						    <span class="text">youremail@email.com</span>
 					    </div>
 					    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
-						    <p class="mb-0 register-link"><a href="#" class="mr-3">Register</a><a href="#">Sign Up</a></p>
+						    <p class="mb-0 register-link"><a href="/register" class="mr-3">Register</a><a href="">Sign in</a></p>
 					    </div>
 				    </div>
 			    </div>
