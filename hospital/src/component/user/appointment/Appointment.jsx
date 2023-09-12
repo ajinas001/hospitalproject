@@ -1,8 +1,103 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios  from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 function Appointment() {
+  const token = localStorage.getItem("token")
+  const [data, setdata] = useState({
+    name: "",
+    age: "",
+    place:"",
+    doctor:"",
+    phone:"",
+    date:"",
+    gender:"",
+
+   
+    
+  })
+  console.log(data);
+
+  const navigate = useNavigate();
+  const [formErrors, setFormErrors] = useState({})
+  const [isSubmit, setIsSubmit] = useState(false)
+  const setRegister = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setdata({ ...data, [name]: value })
+  }
+  const validate = (values) => {
+
+    var error = {}
+    if (!values.name) {
+      error.name = "Enter username"
+    }
+   
+    if (!values.age) {
+      error.age = "please enter your age"
+    }
+
+    if (!values.place) {
+      error.place = "please enter your place"
+    }
+
+    if (!values.doctor) {
+      error.doctor = "please select your doctor"
+    }
+
+    if (!values.phone) {
+      error.phone = "please enter your phone number"
+    }
+
+    if (!values.date) {
+      error.date = "please enter the date"
+    }
+
+    if (!values.gender) {
+      error.gender = "please enter your gender"
+    }
+
+
+   
+    return error
+  }
+
+
+
+  const validation = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(data))
+    setIsSubmit(true)
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      axios.post('http://localhost:4000/save/save-appointment', data,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          console.log("res", res);
+         
+          navigate('/payment')
+         
+          // window.location.reload();
+
+         if (res.data.role == 1) {
+          localStorage.setItem("role", res.data.role)
+          localStorage.setItem("user_id", res.data.login_id)
+          localStorage.setItem("token", res)
+
+          navigate('/userhome')
+        }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }
   return (
     <>
+    <br></br>
      <section className="ftco-section ftco-no-pt ftco-no-pb ftco-services-2 bg-light mt-5">
   <div className="container">
     <div className="row d-flex">
@@ -80,17 +175,36 @@ function Appointment() {
             <div className="">
               <div className="form-group">
                 <input
+                 onChange={setRegister}
+                 onClick={() => { setFormErrors({ ...formErrors, name: "" }) }}
                   type="text"
                   className="form-control"
-                  placeholder="First Name"
+                  placeholder="Name"
+                  name='name'
                 />
+                <span style={{ color: formErrors.name ? "red" : "" }}> {formErrors.name} </span>
               </div>
               <div className="form-group">
                 <input
+                onChange={setRegister}
+                onClick={() => { setFormErrors({ ...formErrors, age: "" }) }}
                   type="text"
+                  name='age'
                   className="form-control"
-                  placeholder="Last Name"
+                  placeholder="Age"
                 />
+                <span style={{ color: formErrors.age ? "red" : "" }}> {formErrors.age} </span>
+              </div>
+              <div className="form-group">
+                <input
+                onChange={setRegister}
+                onClick={() => { setFormErrors({ ...formErrors, place: "" }) }}
+                  type="text"
+                  name='place'
+                  className="form-control"
+                  placeholder="place"
+                />
+                <span style={{ color: formErrors.place ? "red" : "" }}> {formErrors.place} </span>
               </div>
             </div>
             <div className="">
@@ -100,39 +214,52 @@ function Appointment() {
                     <div className="icon">
                       <span className="ion-ios-arrow-down" />
                     </div>
-                    <select name="" id="" className="form-control">
-                      <option value="">Select Your Services</option>
-                      <option value="">Neurology</option>
-                      <option value="">Cardiology</option>
-                      <option value="">Dental</option>
-                      <option value="">Ophthalmology</option>
-                      <option value="">Other Services</option>
+                    <select name="doctor" id="" className="form-control"
+                    onChange={setRegister}
+                    onClick={() => { setFormErrors({ ...formErrors, doctor: "" }) }}
+                    >
+                      
+                      <option value="">Select Your Doctor</option>
+                      <option value="DR.ian smith">DR.Ian smith(Dentist)</option>
+                      <option value="DR.rachel parker">DR.rachel parker(ophthalmologist)</option>
+                      {/* <option value="dental">Dental</option>
+                      <option value="ophthalmology">Ophthalmology</option> */}
+                      <option value="other services">Other Services</option>
                     </select>
+                    <span style={{ color: formErrors.service ? "red" : "" }}> {formErrors.service} </span>
                   </div>
                 </div>
               </div>
               <div className="form-group">
                 <input
+                onChange={setRegister}
+                onClick={() => { setFormErrors({ ...formErrors, phone: "" }) }}
                   type="text"
+                  name='phone'
                   className="form-control"
                   placeholder="Phone"
                 />
+                <span style={{ color: formErrors.phone ? "red" : "" }}> {formErrors.phone} </span>
               </div>
             </div>
             <div className="">
               <div className="form-group">
                 <div className="input-wrap">
-                  <div className="icon">
+                  {/* <div className="icon">
                     <span className="ion-md-calendar" />
-                  </div>
+                  </div> */}
                   <input
-                    type="text"
+                   onChange={setRegister}
+                   onClick={() => { setFormErrors({ ...formErrors, date: "" }) }}
+                    type="date"
+                    name='date'
                     className="form-control appointment_date"
-                    placeholder="Date"
+                    placeholder=""
                   />
+                   <span style={{ color: formErrors.date ? "red" : "" }}> {formErrors.date} </span>
                 </div>
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <div className="input-wrap">
                   <div className="icon">
                     <span className="ion-ios-clock" />
@@ -143,23 +270,30 @@ function Appointment() {
                     placeholder="Time"
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="">
-              <div className="form-group">
-                <textarea
-                  name=""
-                  id=""
-                  cols={30}
-                  rows={2}
-                  className="form-control"
-                  placeholder="Message"
-                  defaultValue={""}
-                />
+            <div className="form-group">
+                <div className="input-wrap">
+                  {/* <div className="icon">
+                    <span className="ion-ios-clock" />
+                  </div> */}
+                  <input
+                   onChange={setRegister}
+                   onClick={() => { setFormErrors({ ...formErrors, gender: "" }) }}
+                    type="text"
+                    className="form-control appointment_time"
+                    placeholder="gender"
+                    name='gender'
+                  />
+                  <span style={{ color: formErrors.gender ? "red" : "" }}> {formErrors.gender} </span>
+                </div>
               </div>
+              <br></br>
               <div className="form-group">
                 <input
                   type="submit"
+                  onClick={validation}
                   defaultValue="Appointment"
                   className="btn btn-secondary py-3 px-4"
                 />

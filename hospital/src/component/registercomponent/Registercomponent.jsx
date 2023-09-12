@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import './register.css'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -9,7 +10,7 @@ import './register.css'
 function Registercomponent() {
 
   
-
+  const navigate = useNavigate();
   const [data, setdata] = useState({
     name: "",
     password: "",
@@ -27,6 +28,7 @@ function Registercomponent() {
     const value = event.target.value;
     setdata({ ...data, [name]: value })
   }
+  console.log("data",data);
   const validate = (values) => {
 
     var error = {}
@@ -59,7 +61,12 @@ function Registercomponent() {
       axios.post('http://localhost:4000/save/save-register', data)
         .then((res) => {
           console.log("res", res);
-          window.location.reload();
+          
+          navigate('/')
+        
+
+        
+         
         })
         .catch(err => {
           console.log(err);
@@ -91,7 +98,7 @@ function Registercomponent() {
       id="exampleInputEmail1"
       aria-describedby="emailHelp"
 
-     
+      onChange={setRegister}
       onClick={() => { setFormErrors({ formErrors, name: "" }) }}
     />
     <span style={{ color: formErrors.name ? "red" : "" }}>{formErrors.name}</span>
@@ -110,7 +117,7 @@ function Registercomponent() {
       name='password'
       className="form-control"
       id="exampleInputPassword1"
-     
+      onChange={setRegister}
       onClick={() => { setFormErrors({ formErrors, password: "" }) }}
     />
     <span style={{ color: formErrors.password ? "red" : "" }}>{formErrors.password}</span>
@@ -127,7 +134,7 @@ function Registercomponent() {
       name='email'
       className="form-control"
       id="exampleInputEmail1"
-     
+      onChange={setRegister}
       onClick={() => { setFormErrors({ formErrors, email: "" }) }}
     />
     <span style={{ color: formErrors.email ? "red" : "" }}>{formErrors.email}</span>
@@ -144,7 +151,7 @@ function Registercomponent() {
       name='mobileno'
       className="form-control"
       id="exampleInputEmail1"
-     
+      onChange={setRegister}
       onClick={() => { setFormErrors({ formErrors, mobileno: "" }) }}
     />
     <span style={{ color: formErrors.mobileno ? "red" : "" }}>{formErrors.mobileno}</span>
@@ -161,7 +168,7 @@ function Registercomponent() {
       name='place'
       className="form-control"
       id="exampleInputEmail1"
-     
+      onChange={setRegister}
       onClick={() => { setFormErrors({ formErrors, place: "" }) }}
     />
     <span style={{ color: formErrors.place ? "red" : "" }}>{formErrors.place}</span>

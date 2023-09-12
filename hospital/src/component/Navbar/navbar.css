@@ -1,0 +1,8 @@
+.logout_btn{
+    display: flex;
+}
+#logout-cancel-btn{
+    height: 45px;
+    width: 50x;
+    margin-top: 5px;
+}

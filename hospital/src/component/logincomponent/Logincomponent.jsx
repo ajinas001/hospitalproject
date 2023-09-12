@@ -4,6 +4,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import swal from 'sweetalert';
+
 
 
 
@@ -14,7 +19,8 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 500,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '0px solid #000',
+  borderRadius:'10px',
   boxShadow: 24,
   p: 4,
   
@@ -31,12 +37,12 @@ function Logincomponent() {
   const [data, setdata] = useState({
     name: "",
     password: "",
-    email: "",
+    // email:"",
     
   })
   console.log(data);
 
-
+  const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
   const setRegister = (event) => {
@@ -51,9 +57,9 @@ function Logincomponent() {
       error.name = "Enter username"
     }
 
-    if (!values.email) {
-      error.email = "Enter email"
-    }
+    // if (!values.email) {
+    //   error.email = "Enter email"
+    // }
    
     if (!values.password) {
       error.password = "Enter password"
@@ -72,17 +78,52 @@ function Logincomponent() {
       axios.post('http://localhost:4000/save/save-login', data)
         .then((res) => {
           console.log("res", res);
+          // toast.success(res.data.message, {
+          //   position: "top-center",
+          //   autoClose: 5000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "colored",
+          //   })
+              if (res.data.role == 1) {
+         
+                localStorage.setItem("role", res.data.role)
+                localStorage.setItem("user_id", res.data.login_id)
+                localStorage.setItem("token", res.data.token)
+                navigate('/userhome')
+              }
           window.location.reload();
+
+        
         })
         .catch(err => {
           console.log(err);
+          // swal("Error!", err.res.data.message, "error");
+          toast.error(err.response.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
         })
     }
   }
+ 
 
   return (
    
      <>
+ 
+
+
+     
 <div>
       <Button onClick={handleOpen} ><div className=' btn btn-primary py-3 px-4'>Login now</div> </Button>
       <Modal
@@ -98,6 +139,7 @@ function Logincomponent() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
          
             <div className="modal-body">
+            <ToastContainer/>
 
 
               <label htmlFor="inputPassword5" className="form-label">
@@ -114,7 +156,7 @@ function Logincomponent() {
               />
               <span style={{ color: formErrors.name ? "red" : "" }}> {formErrors.name} </span>
               <br />
-
+{/* 
               <label htmlFor="inputPassword5" className="form-label">
                 Email
               </label>
@@ -122,11 +164,12 @@ function Logincomponent() {
                 onChange={setRegister}
                 onClick={() => { setFormErrors({ ...formErrors, email: "" }) }}
                 type="email"
+                name='email'
                 id="inputPassword5"
                 className="form-control"
                 aria-describedby="passwordHelpBlock"
               /><span style={{ color: formErrors.name ? "red" : "" }}> {formErrors.name} </span>
-              <br />
+              <br /> */}
 
               <label htmlFor="inputPassword5" className="form-label">
                  Password
@@ -135,6 +178,7 @@ function Logincomponent() {
                 onChange={setRegister}
                 onClick={() => { setFormErrors({ ...formErrors, password: "" }) }}
                 type="text"
+                name='password'
                 id="inputPassword5"
                 className="form-control"
                 aria-describedby="passwordHelpBlock"
@@ -151,7 +195,7 @@ function Logincomponent() {
               >
                 Close
               </button> */}
-              <a href='' className='mr-5' >Dont have an account?</a>
+              <a href='/register' className='mr-5' >Don't have an account?</a>
               <button type="submit" onClick={validation} className="btn btn-primary py-3 px-5 ">
                 Submit
               </button>

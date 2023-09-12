@@ -3,13 +3,14 @@ import React from 'react'
 function About() {
   return (
     <>
+    <br></br><br></br><br></br>
       <section
-  className="ftco-counter img ftco-section ftco-no-pt ftco-no-pb" data-aos="fade-down"
+  className="ftco-counter img ftco-section ftco-no-pt ftco-no-pb" data-aos="fade-up"
   id="about-section"
 >
   <div className="container">
     <div className="row d-flex">
-      <div className="col-md-6 col-lg-5 d-flex mt-5">
+      <div className="col-md-6 col-lg-5 d-flex mt-4">
         <div
           className="img d-flex align-self-stretch align-items-center"
           style={{ backgroundImage: "url(images/about.jpg)" }}
@@ -18,7 +19,7 @@ function About() {
       <div className="col-md- col-lg-7 pl-lg-5 py-md-5">
         <div className="py-md-5">
           <div className="row justify-content-start pb-3">
-            <div className="col-md-12 heading-section  p-4 p-lg-5" data-aos="fade-down">
+            <div className="col-md-12 heading-section  p-4 p-lg-5" data-aos="fade-up">
               <h2 className="mb-4">
                 We Are <span>Mediplus</span> A Medical Clinic
               </h2>

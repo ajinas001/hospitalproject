@@ -4,9 +4,10 @@ import React from 'react'
 export default function Mainhome_bg() {
   return (
    <>
+   <br></br>
   <section
   className="hero-wrap js-fullheight"
-  style={{ backgroundImage: 'url("images/bg_3.jpg")' }}
+  style={{ backgroundImage: 'url("images/bgimage2.jpg")' }}
   data-section="home"
   data-stellar-background-ratio="0.5"
 >
@@ -18,18 +19,18 @@ export default function Mainhome_bg() {
     >
       <div className="col-md-6 pt-5 " data-aos="fade-up">
         <div className="mt-5">
-          <span className="subheading">Welcome to Mediplus</span>
+          <span className="subheading ml-5">Welcome to Mediplus</span>
           <h1 className="mb-4">
-            <span className=''>We</span> are here <br />
-            for your Care
+            <span className='ml-5'>We are here </span> <br />
+           <span className='ml-5'>for your Care</span> 
           </h1>
-          <p className="mb-4">
+          <p className="mb-4 ml-5">
             Far far away, behind the word mountains, far from the countries
             Vokalia and Consonantia, there live the blind texts. Separated they
             live in Bookmarksgrove.
           </p>
           <p>
-            <a href="/appointment" className="btn btn-primary py-3 px-4">
+            <a href="/appointment" className="btn btn-primary py-3 px-4 ml-5">
               Make an appointment
             </a>
           </p>

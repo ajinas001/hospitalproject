@@ -1,6 +1,30 @@
 import React from 'react'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { Box, Modal, Typography } from '@mui/material';
+import './navbar.css'
+
+
+import Button from '@mui/material/Button';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '0px solid #000',
+  boxShadow: 24,
+  borderRadius:'10px',
+  p: 2,
+  
+};
 
 export default function Navbar() {
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <>
       <nav
@@ -56,8 +80,41 @@ export default function Navbar() {
         </li>
         <li className="nav-item cta mr-md-2">
           <a href="/appointment" className="nav-link">
-            Appointment
+           Appointment
           </a>
+        </li>
+        <li className="nav-item  mr-md-2">
+        
+            
+       <div onClick={handleOpen} className='text-dark mt-2 ml-5'><LogoutOutlinedIcon/></div> 
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+         
+            <div className="modal-body">
+
+                  <h3>Are you sure want to Logout?</h3>
+                    <div className='logout_btn'>
+                  <div onClick={handleClose} id='logout-cancel-btn' className='btn btn-primary py-2 px-4 btn-start'>cancel</div>
+                    <a href='/' className='nav-link'>
+                  <button type="submit"  className="btn btn-danger py-2 px-4">
+               logout
+              </button>
+              </a>
+              </div>
+              </div>
+              </Typography>
+             </Box>
+             </Modal>
+          
         </li>
       </ul>
     </div>

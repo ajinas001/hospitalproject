@@ -8,9 +8,11 @@ import Contactpage from './pages/Contactpage/Contactpage';
 import Appointmentpage from './pages/appointmentpage/Appointmentpage';
 import Registrationpage from './pages/Registrationpage/Registrationpage';
 import Loginpage from './pages/Loginpage/Loginpage';
+import Paymentpage from './pages/paymentpage/Paymentpage';
 
 function App() {
   return (
+    
    <>
    
    <BrowserRouter>
@@ -22,6 +24,7 @@ function App() {
    <Route path='/aboutdetails' element= {<Aboutdetailspage/>}></Route>
    <Route path='/contactdetails' element= {<Contactpage/>}></Route>
    <Route path='/appointment' element= {<Appointmentpage/>}></Route>
+   <Route path='/payment' element= {<Paymentpage/>}></Route>
    </Routes>
    </BrowserRouter>
    
