@@ -32,6 +32,7 @@ function Registercomponent() {
   const validate = (values) => {
 
     var error = {}
+    
     if (!values.name) {
       error.name = "Enter username"
     }
