@@ -8,7 +8,7 @@ const appointmentschema = new schema({
     name:{type:String},
     age:{type:String},
     place:{type:String},
-    doctor:{type:String},
+    doctor:{type:mongoose.Types.ObjectId,ref:""},
     phone:{type:String},
     date:{type:String},
     gender:{type:String},

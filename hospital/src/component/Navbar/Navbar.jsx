@@ -102,8 +102,8 @@ export default function Navbar() {
             <div className="modal-body">
 
                   <h3>Are you sure want to Logout?</h3>
-                    <div className='logout_btn'>
-                  <div onClick={handleClose} id='logout-cancel-btn' className='btn btn-primary py-2 px-4 btn-start'>cancel</div>
+                    <div className='logout_btn d-flex'>
+                  <div onClick={handleClose} id='logout-cancel-btn' className='btn btn-primary py-2 px-4'>cancel</div>
                     <a href='/' className='nav-link'>
                   <button type="submit"  className="btn btn-danger py-2 px-4">
                logout

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import './register.css'
 import { useNavigate } from 'react-router-dom'
+import swal from 'sweetalert'
 
 
 
@@ -62,7 +63,7 @@ function Registercomponent() {
       axios.post('http://localhost:4000/save/save-register', data)
         .then((res) => {
           console.log("res", res);
-          
+          swal("Good job!", " Registered successfully ", "success");
           navigate('/')
         
 
@@ -83,11 +84,12 @@ function Registercomponent() {
       <div className='row'>
 
       
-   
-    <div className='loginpageborder p-5 '>
+  
+    <div className='mt-3 p-5 '>
 
-<form onSubmit={validation}>
+<form onSubmit={validation} className='mx-auto'>
   <div className="mb-3">
+    <h3 className='text-center'>Register your details </h3>
     <label htmlFor="exampleInputEmail1" className="form-label">
       Username
     </label>
@@ -187,6 +189,7 @@ function Registercomponent() {
 </form>
 
 </div>
+
 </div>
     </div>
            

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './Payment.css'
-
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { sendPost } from '../../../Redux/LoginSlice';
+import swal from 'sweetalert';
+
 
 function Payment() {
 
@@ -17,6 +20,8 @@ function Payment() {
   console.log(data);
 
 
+  const params = useParams();
+const dispatch = useDispatch
   const [formErrors, setFormErrors] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
   const setRegister = (event) => {
@@ -69,43 +74,40 @@ function Payment() {
 
 
   console.log(data);
-  const itemId = localStorage.getItem('user_id')
+ 
 
-  console.log(itemId);
 
   const validation = (e) => {
     console.log("tsrd");
     e.preventDefault();
     setFormErrors(validate(data))
     setIsSubmit(true)
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      axios.get('http://localhost:4000/save/view-appointment', data)
-        .then((res) => {
-          console.log("res", res);
-
-          navigate('/')
-
-
-
-
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+  navigate('/paymentdonepage')
+  swal("Good job!", "Booked successfully", "success");
   }
 
   useEffect(() => {
-    axios.get('http://localhost:4000/save/view-appointment')
+
+// dispatch(sendPost(data))
+const userid = localStorage.getItem("user_id")
+console.log("locid",userid);
+    axios.get(`http://localhost:4000/save/view-appointment/${userid}`)
       .then((res) => {
         console.log('response view appointment', res);
         setdata(res.data.data)
+       
       })
       .catch((err) => {
         console.log(err);
       })
   }, [])
+const saving  = (e)=>{
+axios.get('http://localhost:4000/save/save-booking')
+.then((res)=>{
+  e.preventDefault();
 
+})
+}
 
   return (
     <>
@@ -175,7 +177,7 @@ function Payment() {
                 <div className="flex">
                   <div className="inputBox">
                     <span>exp year :</span>
-                    <input type="number" name='expyear' placeholder={2022}
+                    <input type="text" name='expyear' placeholder={2022}
                      onChange={setRegister}
                      onClick={() => { setFormErrors({ formErrors, expyear: "" }) }} />
                       <p style={{ color: formErrors.expyear ? "red" : "" }}>{formErrors.expyear}</p>

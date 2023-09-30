@@ -17,7 +17,7 @@ export default function Mainhome_bg() {
       className="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
       data-scrollax-parent="true"
     >
-      <div className="col-md-6 pt-5 " data-aos="fade-up">
+      <div className="col-md-6 pt-5 " data-aos="fade-">
         <div className="mt-5">
           <span className="subheading ml-5">Welcome to Mediplus</span>
           <h1 className="mb-4">

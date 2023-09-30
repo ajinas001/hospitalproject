@@ -5,6 +5,7 @@ mongoose.connect("mongodb+srv://ajinasmankadavu9544:ajinasmankadavu9544@cluster0
 const schema = mongoose.Schema
 const registerschema = new schema({
     loginId : {type:mongoose.Types.ObjectId,ref:"login_tb"},
+    // userid : {type:mongoose.Types.ObjectId,ref:"login_tb"},
     name:{type:String},
     password:{type:String},
     email:{type:String},

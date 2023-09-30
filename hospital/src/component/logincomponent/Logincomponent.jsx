@@ -8,6 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import swal from 'sweetalert';
+import {useSelector,useDispatch} from 'react-redux'
+import { sendPost } from '../../Redux/LoginSlice';
+
+
+
+
 
 
 
@@ -21,7 +27,7 @@ const style = {
   bgcolor: 'background.paper',
   border: '0px solid #000',
   borderRadius:'10px',
-  boxShadow: 24,
+  boxShadow: 50,
   p: 4,
   
 };
@@ -30,6 +36,9 @@ const style = {
 
 function Logincomponent() {
 
+
+
+const dispatch = useDispatch()
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -75,6 +84,7 @@ function Logincomponent() {
     setFormErrors(validate(data))
     setIsSubmit(true)
     if (Object.keys(formErrors).length === 0 && isSubmit) {
+      // dispatch(sendPost(data))
       axios.post('http://localhost:4000/save/save-login', data)
         .then((res) => {
           console.log("res", res);
@@ -93,9 +103,28 @@ function Logincomponent() {
                 localStorage.setItem("role", res.data.role)
                 localStorage.setItem("user_id", res.data.login_id)
                 localStorage.setItem("token", res.data.token)
+                swal("welcome", " login successfully ", "success");
                 navigate('/userhome')
+                
               }
-          window.location.reload();
+              if (res.data.role == 2) {
+                console.log("fdyufvttftuvftyktyvk");
+                localStorage.setItem("role", res.data.role)
+                localStorage.setItem("user_id", res.data.login_id)
+                // localStorage.setItem("token", res.data.token)
+                navigate('/admin')
+                swal("welcome", " login successfully ", "success");
+              }
+              if (res.data.role == 0) {
+                console.log("fdyufvttftuvftyktyvk");
+                localStorage.setItem("role", res.data.role)
+                localStorage.setItem("drid", res.data.drid)
+                localStorage.setItem("user_id", res.data.login_id)
+                // localStorage.setItem("token", res.data.token)
+                navigate('/doctorhome')
+                swal("welcome", " login successfully ", "success");
+              }
+          // window.location.reload();
 
         
         })

@@ -9,6 +9,10 @@ import Appointmentpage from './pages/appointmentpage/Appointmentpage';
 import Registrationpage from './pages/Registrationpage/Registrationpage';
 import Loginpage from './pages/Loginpage/Loginpage';
 import Paymentpage from './pages/paymentpage/Paymentpage';
+import Paymentdonepage from './pages/paymentpage/Paymentdonepage';
+import Adminpage from './pages/Adminpage/Adminpage';
+import Adddoctor from './pages/Adddoctorpage/Adddoctor';
+import Doctorhomepage from './pages/Doctorhomepage/Doctorhomepage';
 
 function App() {
   return (
@@ -25,6 +29,12 @@ function App() {
    <Route path='/contactdetails' element= {<Contactpage/>}></Route>
    <Route path='/appointment' element= {<Appointmentpage/>}></Route>
    <Route path='/payment' element= {<Paymentpage/>}></Route>
+   <Route path='/paymentdonepage' element= {<Paymentdonepage/>}></Route>
+   <Route path='/hospitalregister' element= {<Paymentdonepage/>}></Route>
+   <Route path='/admin' element= {<Adminpage/>}></Route>
+   <Route path='/adddoctor' element= {<Adddoctor/>}></Route>
+   <Route path='/doctorhome' element= {<Doctorhomepage/>}></Route>
+
    </Routes>
    </BrowserRouter>
    
