@@ -31,16 +31,11 @@ app.use('/save', Registerrouter)
 
 
 
-
-
-
-
-
 const connectionString = 'mongodb+srv://ajinasmankadavu9544:ajinasmankadavu9544@cluster0.jxiwt1h.mongodb.net/HospitalDB?retryWrites=true&w=majority'
 mongoose.connect(connectionString).then(() => {
   app.listen(
     4000, () => {
-      console.log("server started at http://localhost:4000");
+      console.log("server started at http://localhost:3000");
     })
 
 }).catch((error) => {

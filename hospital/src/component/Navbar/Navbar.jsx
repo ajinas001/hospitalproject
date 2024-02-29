@@ -79,7 +79,7 @@ export default function Navbar() {
           </a>
         </li>
         <li className="nav-item cta mr-md-2">
-          <a href="/appointment" className="nav-link">
+          <a href="/doctordetails" className="nav-link">
            Appointment
           </a>
         </li>

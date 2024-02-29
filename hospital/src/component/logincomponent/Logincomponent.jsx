@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import swal from 'sweetalert';
 import {useSelector,useDispatch} from 'react-redux'
@@ -23,7 +23,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 500,
+  width: 'auto',
+  
   bgcolor: 'background.paper',
   border: '0px solid #000',
   borderRadius:'10px',
@@ -88,16 +89,8 @@ const dispatch = useDispatch()
       axios.post('http://localhost:4000/save/save-login', data)
         .then((res) => {
           console.log("res", res);
-          // toast.success(res.data.message, {
-          //   position: "top-center",
-          //   autoClose: 5000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          //   theme: "colored",
-          //   })
+        
+         
               if (res.data.role == 1) {
          
                 localStorage.setItem("role", res.data.role)
@@ -105,24 +98,30 @@ const dispatch = useDispatch()
                 localStorage.setItem("token", res.data.token)
                 swal("welcome", " login successfully ", "success");
                 navigate('/userhome')
+                toast.success(res.data.message) 
                 
               }
               if (res.data.role == 2) {
                 console.log("fdyufvttftuvftyktyvk");
                 localStorage.setItem("role", res.data.role)
                 localStorage.setItem("user_id", res.data.login_id)
-                // localStorage.setItem("token", res.data.token)
+                localStorage.setItem("token", res.data.token)
                 navigate('/admin')
                 swal("welcome", " login successfully ", "success");
+                toast.success(res.data.message) 
               }
               if (res.data.role == 0) {
                 console.log("fdyufvttftuvftyktyvk");
                 localStorage.setItem("role", res.data.role)
-                localStorage.setItem("drid", res.data.drid)
+                localStorage.setItem("drid", res.data.login_id)
+                localStorage.setItem("profileImage", res.data.profileImage)
+                localStorage.setItem("department", res.data.department)
+                localStorage.setItem("name", res.data.name)
                 localStorage.setItem("user_id", res.data.login_id)
-                // localStorage.setItem("token", res.data.token)
+                localStorage.setItem("token", res.data.token)
                 navigate('/doctorhome')
                 swal("welcome", " login successfully ", "success");
+                toast.success(res.data.message) 
               }
           // window.location.reload();
 
@@ -130,17 +129,18 @@ const dispatch = useDispatch()
         })
         .catch(err => {
           console.log(err);
+          toast.error(err.response.data.message) 
           // swal("Error!", err.res.data.message, "error");
-          toast.error(err.response.data.message, {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            });
+          // toast.error(err.response.data.message, {
+          //   position: "top-center",
+          //   autoClose: 2000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          //   theme: "colored",
+          //   });
         })
     }
   }
@@ -150,7 +150,10 @@ const dispatch = useDispatch()
    
      <>
  
+<div className='container'>
+  <div className='row'>
 
+  
 
      
 <div>
@@ -168,7 +171,7 @@ const dispatch = useDispatch()
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
          
             <div className="modal-body">
-            <ToastContainer/>
+           
 
 
               <label htmlFor="inputPassword5" className="form-label">
@@ -206,7 +209,7 @@ const dispatch = useDispatch()
               <input
                 onChange={setRegister}
                 onClick={() => { setFormErrors({ ...formErrors, password: "" }) }}
-                type="text"
+                type="password"
                 name='password'
                 id="inputPassword5"
                 className="form-control"
@@ -234,6 +237,9 @@ const dispatch = useDispatch()
       </Modal>
     </div>
 
+
+    </div>
+</div>
 </>
     
   )

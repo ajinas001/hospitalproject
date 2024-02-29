@@ -7,6 +7,7 @@ import { sendPost } from '../../../Redux/LoginSlice';
 import swal from 'sweetalert';
 
 
+
 function Payment() {
 
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function Payment() {
 
 
   const params = useParams();
-const dispatch = useDispatch
+  const dispatch = useDispatch
   const [formErrors, setFormErrors] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
   const setRegister = (event) => {
@@ -29,7 +30,7 @@ const dispatch = useDispatch
     const value = event.target.value;
     setdata({ ...data, [name]: value })
   }
-
+  const token = localStorage.getItem("token")
   const validate = (values) => {
 
     var error = {}
@@ -48,25 +49,25 @@ const dispatch = useDispatch
       error.cardno = "Please enter valid card number";
     };
 
-    var regexpmonth= /^([A-Za-z\.]+)$/;
+    var regexpmonth = /^([A-Za-z\.]+)$/;
     if (!regexpmonth.test(values.expmonth)) {
     }
     else {
       error.expmonth = "Please correct the data";
     };
-    var regexpyear= /^([A-Za-z\.]+)$/;
+    var regexpyear = /^([A-Za-z\.]+)$/;
     if (!regexpyear.test(values.expyear)) {
     }
     else {
       error.expyear = "Please correct the data";
     };
-    var regcvv= /^([A-Za-z\.]+)$/;
+    var regcvv = /^([A-Za-z\.]+)$/;
     if (!regcvv.test(values.cvv)) {
     }
     else {
       error.cvv = "Please correct the data";
     };
-   
+
     return error
   }
   console.log(formErrors);
@@ -74,40 +75,54 @@ const dispatch = useDispatch
 
 
   console.log(data);
- 
+
 
 
   const validation = (e) => {
     console.log("tsrd");
-    e.preventDefault();
+    // e.preventDefault();
     setFormErrors(validate(data))
     setIsSubmit(true)
-  navigate('/paymentdonepage')
-  swal("Good job!", "Booked successfully", "success");
+    navigate('/paymentdonepage')
+    swal("Good job!", "Booked successfully", "success");
   }
 
   useEffect(() => {
 
-// dispatch(sendPost(data))
-const userid = localStorage.getItem("user_id")
-console.log("locid",userid);
+    // dispatch(sendPost(data))
+    const userid = localStorage.getItem("user_id")
+    console.log("locid", userid);
     axios.get(`http://localhost:4000/save/view-appointment/${userid}`)
       .then((res) => {
         console.log('response view appointment', res);
         setdata(res.data.data)
-       
+
       })
       .catch((err) => {
         console.log(err);
       })
   }, [])
-const saving  = (e)=>{
-axios.get('http://localhost:4000/save/save-booking')
-.then((res)=>{
-  e.preventDefault();
+  const booking = (e) => {
+  
 
-})
-}
+    {
+      axios.post('http://localhost:4000/save/save-booking', data, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          console.log("res", res);
+
+          navigate('/paymentdonepage')
+
+
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }
 
   return (
     <>
@@ -170,32 +185,36 @@ axios.get('http://localhost:4000/save/save-booking')
                 <div className="inputBox">
                   <span>exp month :</span>
                   <input type="text" name='expmonth' placeholder="january"
-                  onChange={setRegister}
-                  onClick={() => { setFormErrors({ formErrors, expmonth: "" }) }} />
-                   <p style={{ color: formErrors.expmonth ? "red" : "" }}>{formErrors.expmonth}</p>
+                    onChange={setRegister}
+                    onClick={() => { setFormErrors({ formErrors, expmonth: "" }) }} />
+                  <p style={{ color: formErrors.expmonth ? "red" : "" }}>{formErrors.expmonth}</p>
                 </div>
                 <div className="flex">
                   <div className="inputBox">
                     <span>exp year :</span>
                     <input type="text" name='expyear' placeholder={2022}
-                     onChange={setRegister}
-                     onClick={() => { setFormErrors({ formErrors, expyear: "" }) }} />
-                      <p style={{ color: formErrors.expyear ? "red" : "" }}>{formErrors.expyear}</p>
+                      onChange={setRegister}
+                      onClick={() => { setFormErrors({ formErrors, expyear: "" }) }} />
+                    <p style={{ color: formErrors.expyear ? "red" : "" }}>{formErrors.expyear}</p>
                   </div>
                   <div className="inputBox">
                     <span>CVV :</span>
                     <input type="text" name='cvv' placeholder={1234}
                       onChange={setRegister}
                       onClick={() => { setFormErrors({ formErrors, cvv: "" }) }} />
-                       <p style={{ color: formErrors.cvv ? "red" : "" }}>{formErrors.cvv}</p>
-                   </div>
+                    <p style={{ color: formErrors.cvv ? "red" : "" }}>{formErrors.cvv}</p>
+                  </div>
                 </div>
               </div>
             </div>
             <div className='flex'>
               <a href='/userhome' className='btn btn-danger submit-btn'>cancel</a>
               {/* <a href='#' type='submit' className=''>submit</a> */}
-              <button type='button' className='btn btn-success submit-btn ml-2' onClick={validation} >submit</button>
+              <button type='button' className='btn btn-success submit-btn ml-2' onClick={() => {
+                validation();
+                booking();
+              }}
+              >submit</button>
             </div>
 
 

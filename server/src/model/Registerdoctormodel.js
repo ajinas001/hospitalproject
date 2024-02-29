@@ -10,8 +10,10 @@ const registerschema = new schema({
     password:{type:String},
     email:{type:String},
     department:{type:String},
-    // mobileno:{type:String},
-    // place:{type:String},
+    mobileno:{type:String},
+    place:{type:String},
+    qualification:{type:String},
+    profileImage:{type:String},
 })
 
 const registerdoctormodel = mongoose.model('registerdoctor_tb',registerschema)

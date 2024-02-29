@@ -1,10 +1,28 @@
-.loginpageborder{
-    border: 1px solid black;
+.pageborder {
+    border: 1px solid #ccc;
     border-radius: 15px;
-    margin-top: 50px;
-    /* height: 670px;
     padding: 25px;
-    width: 800px;
-   
-    margin-left: 330px; */
-}
+    background-color: #f8f9fa;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-control {
+    border-radius: 5px;
+  }
+  
+  .subbtn {
+    background-color: #007bff;
+    border: none;
+    width: 95%;
+  }
+  
+  .subbtn:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .col-lg-9 {
+      flex: 1 0 100%; /* Ensure the form takes full width on small screens */
+    }
+  }
+  

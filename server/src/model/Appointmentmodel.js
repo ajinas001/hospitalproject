@@ -11,7 +11,8 @@ const appointmentschema = new schema({
     doctor:{type:mongoose.Types.ObjectId,ref:""},
     phone:{type:String},
     date:{type:String},
-    gender:{type:String},
+    token:{type:Number},
+    // gender:{type:String},
     status:{type:String}
 })
 

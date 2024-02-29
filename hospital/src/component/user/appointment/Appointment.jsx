@@ -1,21 +1,68 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 function Appointment() {
+
+  const [selectedDate, setSelectedDate] = useState('');
+  const [showTokenSelection, setShowTokenSelection] = useState(false);
+  const [bookedtokens, setbookedtokens] = useState([])
+  // const [occupiedtoken , setOccupiedtoken] = useState()
+  // ...
+
+  const { docid } = useParams()
+
+
+  const handleDateChange = (e) => {
+    const { name, value } = e.target;
+    setSelectedDate(value);
+    console.log("date", value);
+
+    axios.post('http://localhost:4000/save/view_token', { date: value, docid: docid })
+      .then((res) => {
+        if (res.data && res.data.success) {
+          const tokens = res.data.data.map(item => item.token);
+          console.log(tokens); // Array containing all token values
+          setbookedtokens(tokens)
+          // setOccupiedtoken(tokens); // Set occupied tokens
+          setShowTokenSelection(true);
+        } else {
+          console.log("Error fetching occupied tokens: No data returned from the backend");
+          // setOccupiedtoken(null); // Reset occupied token state on error
+          setShowTokenSelection(true);
+        }
+      })
+      .catch((error) => {
+        console.log("Error fetching occupied tokens:", error);
+        // setOccupiedtoken(null); // Reset occupied token state on error
+        setShowTokenSelection(false);
+      });
+
+    setdata({ ...data, [name]: value });
+  };
+
+
+
+  // ...
+
+
+
+
+  const today = new Date().toISOString().split('T')[0];
+  // const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+  const numberOfTokens = 20;
+
   const token = localStorage.getItem("token")
   const [data, setdata] = useState({
     name: "",
     age: "",
     place: "",
-    doctor: "",
+    doctor: docid,
     phone: "",
     date: "",
-    gender: "",
-
-
-
+    token: "",
   })
   console.log(data);
 
@@ -42,21 +89,20 @@ function Appointment() {
       error.place = "please enter your place"
     }
 
-    if (!values.doctor) {
-      error.doctor = "please select your doctor"
-    }
-
     if (!values.phone) {
       error.phone = "please enter your phone number"
     }
 
     if (!values.date) {
-      error.date = "please enter the date"
+      error.date = "please select the date"
+    }
+    if (!values.token) {
+      error.token = "please select the available token"
     }
 
-    if (!values.gender) {
-      error.gender = "please enter your gender"
-    }
+    // if (!values.gender) {
+    //   error.gender = "please enter your gender"
+    // }
 
 
 
@@ -65,19 +111,45 @@ function Appointment() {
 
   const [name, setname] = useState([])
 
+  // Inside your Appointment component
 
-  useEffect(() => {
-    axios.get('http://localhost:4000/save/view-doctor')
+  // useEffect(() => {
+  //   // Fetch the list of selected tokens for the selected date
+  //   axios.get('http://localhost:4000/save/view')
+  //     .then((res) => {
+  //       const selectedTokens = res.data.selectedTokens;
 
-      .then((res) => {
-        console.log("res", res);
-        setname(res.data.data)
-      })
-      .catch((err) => {
-        console.log("error", err);
-      })
-  }, [])
-  console.log(name);
+  //       // Disable/hide the selected tokens
+  //       const tokenOptions = document.querySelectorAll('select[name="token"] option');
+  //       tokenOptions.forEach((option) => {
+  //         const tokenNumber = parseInt(option.value);
+  //         if (selectedTokens.includes(tokenNumber)) {
+  //           option.disabled = true;
+  //           // Optionally, hide the option
+  //           option.style.display = 'none';
+  //         }
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, [selectedDate]);
+
+
+
+  // useEffect(() => {
+  //   console.log(docid,"doc");
+  //   axios.get('http://localhost:4000/save/view-doctor')
+
+  //     .then((res) => {
+  //       console.log("res", res);
+  //       setname(res.data.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log("error", err);
+  //     })
+  // }, [])
+
 
   const validation = (e) => {
     e.preventDefault();
@@ -91,10 +163,9 @@ function Appointment() {
       })
         .then((res) => {
           console.log("res", res);
-
           navigate('/payment')
 
-          // window.location.reload();
+          window.location.reload();
 
           if (res.data.role == 1) {
             localStorage.setItem("role", res.data.role)
@@ -222,34 +293,37 @@ function Appointment() {
                     </div>
                   </div>
                   <div className="">
-                    <div className="form-group">
-                      <div className="form-field">
+                    {/* <div className="form-group">
+                      <div className="input-wrap">
                         <div className="select-wrap">
                           <div className="icon">
                             <span className="ion-ios-arrow-down" />
                           </div>
-                          <select name="doctor" id="" className="form-control"
+                          <select
+                            name="doctor"
+                            id=""
+                            className="form-control"
                             onChange={setRegister}
                             onClick={() => { setFormErrors({ ...formErrors, doctor: "" }) }}
+                            style={{ height: '50px', overflowY: 'auto' }}
+                            defaultValue=""
                           >
-
-                            <option value="">Select Your Doctor</option>
-
+                            <option value="" disabled hidden>Select Your Doctor</option>
                             {name.map((doc, key) => (
-                              <option value={doc.loginId}>
+                              <option value={doc.loginId} key={key}>
                                 {doc.name}
                               </option>
                             ))}
-
-
-                            {/* <option value="DR.ian smith">DR.Ian smith(Dentist)</option>
-                      <option value="DR.rachel parker">DR.rachel parker(ophthalmologist)</option> */}
-
                           </select>
-                          <span style={{ color: formErrors.service ? "red" : "" }}> {formErrors.service} </span>
+
+
+
+                          <span style={{ color: formErrors.doctor ? "red" : "" }}> {formErrors.doctor} </span>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
+
                     <div className="form-group">
                       <input
                         onChange={setRegister}
@@ -261,6 +335,9 @@ function Appointment() {
                       />
                       <span style={{ color: formErrors.phone ? "red" : "" }}> {formErrors.phone} </span>
                     </div>
+
+
+
                   </div>
                   <div className="">
                     <div className="form-group">
@@ -268,37 +345,55 @@ function Appointment() {
                         {/* <div className="icon">
                     <span className="ion-md-calendar" />
                   </div> */}
-                        <input
-                          onChange={setRegister}
-                          onClick={() => { setFormErrors({ ...formErrors, date: "" }) }}
-                          type="date"
-                          name='date'
-                          className="form-control appointment_date"
-                          placeholder=""
-                        />
-                        <span style={{ color: formErrors.date ? "red" : "" }}> {formErrors.date} </span>
-                      </div>
-                    </div>
-                    {/* <div className="form-group">
-                <div className="input-wrap">
-                  <div className="icon">
-                    <span className="ion-ios-clock" />
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control appointment_time"
-                    placeholder="Time"
-                  />
-                </div>
-              </div> */}
-                  </div>
-                  <div className="">
-                    <div className="form-group">
-                      <div className="input-wrap">
-                        {/* <div className="icon">
-                    <span className="ion-ios-clock" />
-                  </div> */}
-                        <input
+
+
+
+                        <div className="form-group">
+                          <label className="m-3">
+                            Select date :
+                            <input type="date" name="date" className="ms-3" value={selectedDate} min={today} max={today} onChange={handleDateChange} />
+                          </label>
+                          <span style={{ color: formErrors.date ? 'red' : '' }}> {formErrors.date} </span>
+
+
+                          
+                          {showTokenSelection && (
+                            <div>
+                              <select
+                                name="token"
+                                id=""
+                                className="form-control mt-3"
+                                onChange={setRegister}
+                                onClick={() => { setFormErrors({ ...formErrors, doctor: '' }) }}
+                                defaultValue=""
+                              >
+                                <option value="" disabled hidden>
+                                  Select the token
+                                </option>
+                                {bookedtokens === null || bookedtokens === undefined ? (
+                                  // Display all tokens when bookedtokens is null or undefined
+                                  [...Array(numberOfTokens)].map((_, index) => (
+                                    <option value={index + 1} key={index}>
+                                      {index + 1}
+                                    </option>
+                                  ))
+                                ) : (
+                                  // Otherwise, display only available tokens
+                                  [...Array(numberOfTokens)].map((_, index) => (
+                                    !bookedtokens.includes(index + 1) && (
+                                      <option value={index + 1} key={index}>
+                                        {index + 1}
+                                      </option>
+                                    )
+                                  ))
+                                )}
+                              </select>
+                              <span style={{ color: formErrors.token ? 'red' : '' }}> {formErrors.token} </span>
+                            </div>
+                          )}
+
+
+                        </div>                        {/* <input
                           onChange={setRegister}
                           onClick={() => { setFormErrors({ ...formErrors, gender: "" }) }}
                           type="text"
@@ -306,7 +401,7 @@ function Appointment() {
                           placeholder="gender"
                           name='gender'
                         />
-                        <span style={{ color: formErrors.gender ? "red" : "" }}> {formErrors.gender} </span>
+                        <span style={{ color: formErrors.gender ? "red" : "" }}> {formErrors.gender} </span> */}
                       </div>
                     </div>
                     <br></br>

@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home';
 import { Provider } from 'react-redux';
 import { store } from './Redux/Store';
+import BookingForm from './Sample/Sample';
 
 
 

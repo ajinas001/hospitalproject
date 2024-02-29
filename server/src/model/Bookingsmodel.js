@@ -3,18 +3,12 @@ mongoose.connect("mongodb+srv://ajinasmankadavu9544:ajinasmankadavu9544@cluster0
 
 
 const schema = mongoose.Schema
-const bookingschema = new schema({
-    userid : {type:mongoose.Types.ObjectId,ref:"login_tb"},
-    name:{type:String},
-    age:{type:String},
-    place:{type:String},
-    doctor:{type:mongoose.Types.ObjectId,ref:""},
-    phone:{type:String},
-    date:{type:String},
-    gender:{type:String},
-    status:{type:String}
-})
+const selectedTokenSchema = new mongoose.Schema({
+    date: { type: Date, required: true },
+    selectedTokens: [{ type: Number, required: true }],
+  });
+  
+  const SelectedToken = mongoose.model('SelectedToken', selectedTokenSchema);
 
-const bookingmodel = mongoose.model('booking_tb',bookingschema)
+module.exports= SelectedToken
 
-module.exports= bookingmodel
